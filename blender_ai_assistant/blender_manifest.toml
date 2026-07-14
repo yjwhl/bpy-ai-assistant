@@ -4,15 +4,15 @@
 schema_version = "1.0.0"
 
 # ---- 基本信息 ----
-id = "blender_ai_assistant"
+id = "bpy_ai_assistant"
 version = "9.10.0"
-name = "Blender AI Assistant"
-tagline = "Natural language to bpy code, with preset system and project logging"
+name = "Bpy AI Assistant"
+tagline = "Natural language to bpy scripts with presets and logging"
 maintainer = "匹宙Plumb"
 type = "add-on"
 
 # ---- 链接 ----
-website = "https://github.com/匹宙Plumb/blender-ai-assistant"
+website = "https://github.com/yjwhl/bpy-ai-assistant"
 
 # ---- 兼容性 ----
 blender_version_min = "4.2.0"
