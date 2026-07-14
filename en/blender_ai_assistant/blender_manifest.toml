@@ -1,0 +1,35 @@
+# Blender Extension Manifest
+# https://docs.blender.org/manual/en/dev/advanced/extensions/getting_started.html
+
+schema_version = "1.0.0"
+
+# ---- Basic Info ----
+id = "blender_ai_assistant"
+version = "9.10.0"
+name = "Blender AI Assistant"
+tagline = "Generate bpy scripts from natural language — preset system + project logging, reduce repetitive tasks"
+maintainer = "匹宙Plumb"
+type = "add-on"
+
+# ---- Links ----
+website = "https://github.com/匹宙Plumb/blender-ai-assistant"
+
+# ---- Compatibility ----
+blender_version_min = "4.2.0"
+
+# ---- License ----
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+copyright = [
+  "2026 匹宙Plumb",
+]
+
+# ---- Tags ----
+tags = ["3D View", "Development", "Pipeline"]
+
+# ---- Permissions ----
+[permissions]
+network = "Communicate with AI API services (DeepSeek, OpenAI, etc.)"
+files = "Save/load presets, command logs, and prompt history to/from disk"
+clipboard = "Copy operation logs to system clipboard"
