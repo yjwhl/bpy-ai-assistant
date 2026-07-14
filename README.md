@@ -1,17 +1,12 @@
-# Blender AI Assistant
+# Bpy AI Assistant
 
-> 在 Blender 里用自然语言写代码 —— AI 生成 bpy 代码，一键预览/编辑/执行，配备预设系统、多轮对话、项目日志记录等完整工作流。
-
-[![Blender 4.2+](https://img.shields.io/badge/Blender-4.2%2B-blue)](https://www.blender.org/)
-[![Blender 5.0](https://img.shields.io/badge/Blender-5.0-9cf)](https://www.blender.org/)
-[![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-green)](https://www.gnu.org/licenses/gpl-3.0)
-[![Version](https://img.shields.io/badge/Version-9.10.0-orange)](./CHANGELOG.md)
+> 自然语言生成 bpy 脚本 — 预设系统 + 项目日志 + 多轮对话，减少重复操作，专注创作。
 
 ## 这是什么
 
-Blender AI Assistant 是一个代码生成型的 Blender AI 插件。和 MCP 工具调用型方案不同，它让 AI 直接生成可执行的 bpy Python 代码，你在预览区看到完整代码后再决定是否运行 —— **你始终拥有最终控制权**。
+Bpy AI Assistant 是一个 **代码生成型** 辅助工具。和 MCP 工具调用型方案不同，它生成可执行的 bpy Python 脚本并展示完整代码，你在预览区确认后再运行 —— **你始终拥有最终控制权**。
 
-核心理念：**AI 写代码，人类做决策。**
+核心理念：**减少重复操作，专注创作本身。**
 
 ## 核心特性
 
@@ -66,7 +61,7 @@ Blender AI Assistant 是一个代码生成型的 Blender AI 插件。和 MCP 工
 
 ### 方式 1：Extensions（推荐，4.2+）
 
-1. 从 [Releases](https://github.com/匹宙Plumb/blender-ai-assistant/releases) 下载 `blender_ai_assistant-x.x.x.zip`
+1. 从 [Releases](https://github.com/bpy-ai-assistant/releases) 下载 `blender_ai_assistant-x.x.x.zip`
 2. Blender → Edit → Preferences → Get Extensions → 右上角 ▼ → Install from Disk
 3. 选择下载的 `.zip` 文件 → 勾选启用
 4. 3D View 侧栏按 `N` 键 → 找到「AI Assistant」面板
@@ -209,6 +204,7 @@ blender --command extension install-file --file ./dist/blender_ai_assistant-9.10
 
 欢迎提交 Issue 和 Pull Request。
 
+- [提交 Bug / 功能建议](https://github.com/bpy-ai-assistant/issues)
 - Bug 报告请附上操作日志（面板「复制」按钮一键复制）
 - PR 请基于最新版本开发
 
@@ -221,3 +217,7 @@ GPL-3.0 — 与 Blender 本身许可证一致。
 - [DeepSeek](https://www.deepseek.com/) — 默认 AI 后端
 - [Blender](https://www.blender.org/) — 伟大的开源 3D 软件
 - 所有在 MCP 生态中探索 Blender + AI 的开发者们
+
+## 链接
+
+- GitHub: [https://github.com/bpy-ai-assistant](https://github.com/bpy-ai-assistant)

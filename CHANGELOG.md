@@ -1,4 +1,4 @@
-# Blender AI Assistant — 更新日志
+# Bpy AI Assistant — 更新日志
 
 ## v9.8.0 (2026-06-02) — Prompt 复用 + 日志复制
 
