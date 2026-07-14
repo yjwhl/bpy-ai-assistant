@@ -1,5 +1,5 @@
 bl_info = {
-    "name": "Blender AI Assistant",
+    "name": "Bpy AI Assistant",
     "author": "匹宙Plumb",
     "version": (9, 10, 0),
     "blender": (4, 2, 0),
@@ -142,7 +142,11 @@ class _DataCache:
         v9.10.0: When .blend file changes, auto-switch preset storage to blend directory.
         """
         with self._lock:
-            current_blend = bpy.data.filepath
+            current_blend = ""
+            try:
+                current_blend = bpy.data.filepath
+            except AttributeError:
+                pass
             need_reset = (self._cache_dir != cache_dir
                           or self._presets_file != presets_file
                           or self._groups_file != groups_file)
@@ -309,7 +313,11 @@ _cache = _DataCache()
 
 def _get_config_dir():
     """Get the config storage directory. v9.10.0: follow .blend file location."""
-    blend = bpy.data.filepath
+    try:
+        blend = bpy.data.filepath
+    except AttributeError:
+        # Restricted context (e.g. extension install) — fall back to add-on directory
+        blend = ""
     if blend:
         return os.path.join(os.path.dirname(blend), "blender_ai_logs")
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), "config")
@@ -396,7 +404,10 @@ def _save_prompt_history(data):
 # ============================================================
 def _get_project_blend_dir():
     """Get the directory of the currently saved .blend file."""
-    fp = bpy.data.filepath
+    try:
+        fp = bpy.data.filepath
+    except AttributeError:
+        return None
     if fp:
         return os.path.dirname(fp)
     return None
@@ -2023,7 +2034,7 @@ def _update_scene_model_preset(self, context):
 
 
 class BLENDER_AI_PT_main_panel(bpy.types.Panel):
-    bl_label = "Blender AI Assistant"
+    bl_label = "Bpy AI Assistant"
     bl_idname = "BLENDER_AI_PT_main_panel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
