@@ -1,10 +1,10 @@
 bl_info = {
-    "name": "Blender AI Assistant",
+    "name": "Bpy AI Assistant",
     "author": "匹宙Plumb",
     "version": (9, 10, 0),
     "blender": (4, 2, 0),
     "location": "3D View > Sidebar (N) > AI Assistant  |  3D View > 顶部菜单栏 > 自动化",
-    "description": "高性能缓存架构 + 完整功能：多轮对话、视口截图、代码预览/编辑、预设库+预设组+导出导入、工具调用、顶部自动化菜单+组合预设。",
+    "description": "自然语言生成 bpy 脚本 — 预设库 + 项目日志 + 多轮对话，减少重复操作，专注创作。",
     "category": "3D View",
 }
 
@@ -93,8 +93,12 @@ COMMAND_LOG_FILENAME = "blender_ai_commands.log"
 
 def _get_project_blend_dir():
     """返回 .blend 文件所在目录，未保存则返回 None"""
-    if bpy.data.filepath:
-        d = os.path.dirname(bpy.data.filepath)
+    try:
+        fp = bpy.data.filepath
+    except AttributeError:
+        return None
+    if fp:
+        d = os.path.dirname(fp)
         if os.path.isdir(d):
             return d
     return None
@@ -187,7 +191,10 @@ class _DataCache:
     def init_paths(self):
         """延迟初始化路径。当 blend 文件从未保存→已保存 或 切换到不同文件时，
         自动从 config 目录迁移/切换到项目目录。"""
-        current_filepath = bpy.data.filepath or ""
+        try:
+            current_filepath = bpy.data.filepath or ""
+        except AttributeError:
+            current_filepath = ""
 
         # 如果 blend 文件变了（从未保存→保存、或切换到新文件），重新初始化
         if self._initialized and current_filepath != self._last_filepath:
@@ -741,6 +748,9 @@ def build_user_message(context, prompt, attach_screenshot=False):
 
 
 def call_ai_api_async(context, prompt, on_done, auto_fix_round=0):
+    if not bpy.app.online_access:
+        run_in_main_thread(lambda: on_done(None, "ERROR: 网络访问已禁用（偏好设置 > 系统 > 允许在线访问）"))
+        return
     api_key, base_url, model, ssl_verify = get_credentials(context)
     if not api_key:
         run_in_main_thread(lambda: on_done(None, "ERROR: 请先填写 API Key"))
@@ -854,6 +864,9 @@ def execute_code(context, code, prompt=""):
 
 def auto_fix_and_retry(context, code, error_msg, prompt, round_num):
     """错误自动修复（最多 MAX_AUTO_FIX_ROUNDS 轮）"""
+    if not bpy.app.online_access:
+        AIState.log("[FIX] 网络访问已禁用，跳过自动修复")
+        return
     if round_num >= AIState.MAX_AUTO_FIX_ROUNDS:
         AIState.log(f"[FIX] 已达最大修复轮次 ({AIState.MAX_AUTO_FIX_ROUNDS})，停止")
         return
@@ -2094,6 +2107,12 @@ class BLENDER_AI_OT_test_connection(bpy.types.Operator):
     bl_label = "测试连接"
 
     def execute(self, context):
+        if not bpy.app.online_access:
+            context.scene.ai_conn_status = "fail"
+            AIState.log("[TEST] 网络访问已禁用（偏好设置 > 系统 > 允许在线访问）")
+            redraw_ui()
+            return {'FINISHED'}
+
         api_key, base_url, model, ssl_verify = get_credentials(context)
         if not api_key:
             context.scene.ai_conn_status = "fail"
@@ -2305,7 +2324,7 @@ def _update_scene_model_preset(self, context):
 
 
 class BLENDER_AI_PT_main_panel(bpy.types.Panel):
-    bl_label = "Blender AI Assistant"
+    bl_label = "Bpy AI Assistant"
     bl_idname = "BLENDER_AI_PT_main_panel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -2598,7 +2617,7 @@ def _update_pref_model_preset(self, context):
 
 
 class BLENDER_AI_preferences(bpy.types.AddonPreferences):
-    bl_idname = __package__ if __package__ else "blender_ai_assistant"
+    bl_idname = __name__
 
     api_key: bpy.props.StringProperty(name="API Key", default="", subtype='PASSWORD')
     base_url: bpy.props.StringProperty(
