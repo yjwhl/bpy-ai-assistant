@@ -1,4 +1,4 @@
-# Blender AI Assistant (English)
+# Bpy AI Assistant (English)
 
 A Blender add-on that generates `bpy` Python scripts from natural language prompts, powered by AI (DeepSeek, OpenAI, Claude, or local models via Ollama).
 
@@ -27,7 +27,7 @@ A Blender add-on that generates `bpy` Python scripts from natural language promp
 
 ### From Blender Extensions Platform (recommended)
 1. In Blender: Edit > Preferences > Get Extensions
-2. Search for "Blender AI Assistant"
+2. Search for "Bpy AI Assistant"
 3. Click Install
 
 ### Manual install
@@ -51,9 +51,19 @@ A Blender add-on that generates `bpy` Python scripts from natural language promp
 4. Click **Run** to execute
 5. Click **Save as Preset** to keep it for later
 
+## Contributing
+
+Issues and Pull Requests are welcome.
+
+- [Report a bug or request a feature](https://github.com/yjwhl/bpy-ai-assistant/issues)
+
 ## License
 
 GPL-3.0-or-later
+
+## Links
+
+- GitHub: [https://github.com/yjwhl/bpy-ai-assistant](https://github.com/yjwhl/bpy-ai-assistant)
 
 ## Author
 
